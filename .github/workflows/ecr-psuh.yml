@@ -6,7 +6,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: lambda-taskrepo
-  IMAGE_TAG: version:1
+  IMAGE_TAG: version1  # Updated to a valid tag format
   AWS_ACCOUNT_ID: 557548602903
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Create ECR repository
         run: |
-          aws ecr create-repository --repository-name $ECR_REPOSITORY
+          aws ecr create-repository --repository-name $ECR_REPOSITORY || echo "Repository already exists"
 
       - name: Build Docker Image
         run: |

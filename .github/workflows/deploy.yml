@@ -2,6 +2,11 @@ name: Deploy Lambda via Terraform
 
 on:
   workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform action to perform (apply or destroy)'
+        required: true
+        default: 'apply'
 
 env:
   AWS_REGION: us-east-1
@@ -28,6 +33,13 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Apply
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply or Destroy
         run: |
-          terraform apply -auto-approve
+          if [ "${{ github.event.inputs.action }}" = "destroy" ]; then
+            terraform destroy -auto-approve
+          else
+            terraform apply -auto-approve
+          fi

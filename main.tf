@@ -2,10 +2,6 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_ecr_repository" "lambda_repo" {
-  name = var.ecr_repo_name
-}
-
 resource "aws_lambda_function" "lambda" {
   function_name = "lambda-task-function"
   package_type  = "Image"
